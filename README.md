@@ -24,3 +24,16 @@ Permite a los estudiantes reservar salas por bloques de 2 horas, controlando la 
 ```bash
 CREATE DATABASE biblioteca_app_bd;
 ```
+
+---
+
+## Configuración del proyecto
+
+1. Clonar el repositorio:
+
+```bash
+git clone https://github.com/TU_USUARIO/biblioteca_app.git
+cd biblioteca_app
+```
+
+2. Crear y activar el entorno virtual:
