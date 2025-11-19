@@ -3,7 +3,9 @@
 {% block contenido %}
   <h1 class="mb-3">Reservas registradas 📋</h1>
 
-  <table class="table table-hover align-middle">
+  <!-- Tabla de reservas activas -->
+  <h5 class="mb-2">Reservas activas</h5>
+  <table class="table table-hover align-middle mb-4">
     <thead>
       <tr>
         <th>Sala</th>
@@ -16,34 +18,61 @@
       </tr>
     </thead>
     <tbody>
-      {% for reserva in reservas %}
+      {% for reserva in reservas_activas %}
         <tr>
           <td>{{ reserva.sala.nombre }}</td>
           <td>{{ reserva.nombre_estudiante }}</td>
           <td>{{ reserva.rut_estudiante }}</td>
           <td>{{ reserva.inicio }}</td>
           <td>{{ reserva.termino }}</td>
+          <td>🟢</td>
           <td>
-            {% if reserva.esta_activa %}
-              🟢
-            {% else %}
-              ⚪
-            {% endif %}
-          </td>
-          <td>
-            <a href="{% url 'editar_reserva' reserva.pk %}" class="btn btn-sm btn-outline-primary">
+            <a href="{% url 'editar_reserva' reserva.pk %}"
+               class="btn btn-sm btn-outline-primary me-2">
               Editar ⏱️
             </a>
-            {% if reserva.esta_activa %}
-            <a href="{% url 'terminar_reserva' reserva.pk %}" class="btn btn-sm btn-outline danger">
-                Terminar Ahora 🛑
+
+            <a href="{% url 'terminar_reserva' reserva.pk %}"
+               class="btn btn-sm btn-outline-danger"
+               onclick="return confirm('¿Seguro que quieres terminar esta reserva ahora?');">
+              Terminar ahora ⛔
             </a>
-            {% endif %}
           </td>
         </tr>
       {% empty %}
         <tr>
-          <td colspan="7">No hay reservas registradas.</td>
+          <td colspan="7">No hay reservas activas en este momento.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <!-- Historial de reservas finalizadas -->
+  <h5 class="mb-2">Historial de reservas finalizadas 🗂️</h5>
+  <table class="table table-sm table-striped align-middle">
+    <thead>
+      <tr>
+        <th>Sala</th>
+        <th>Estudiante</th>
+        <th>RUT</th>
+        <th>Inicio</th>
+        <th>Término</th>
+        <th>Activa</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for reserva in reservas_finalizadas %}
+        <tr>
+          <td>{{ reserva.sala.nombre }}</td>
+          <td>{{ reserva.nombre_estudiante }}</td>
+          <td>{{ reserva.rut_estudiante }}</td>
+          <td>{{ reserva.inicio }}</td>
+          <td>{{ reserva.termino }}</td>
+          <td>🔴</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="6">Aún no hay reservas finalizadas.</td>
         </tr>
       {% endfor %}
     </tbody>

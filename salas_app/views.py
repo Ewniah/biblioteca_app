@@ -45,10 +45,31 @@ def crear_reserva(request):
 # Se creó la vista para listar todas las reservas.
 def lista_reservas(request):
     """
-    Se lista todas las reservas realizadas, ordenadas por fecha de inicio descendente.
+    Se actualiza y muestra todas las reservas, separándolas en activas y finalizadas.
+    Además, se optimiza la consulta para reducir el número de accesos a la base de datos.
     """
-    reservas = Reserva.objects.select_related('sala').order_by('-inicio')
-    return render(request, 'salas_app/lista_reservas.html', {'reservas': reservas}) # Renderiza la lista de reservas
+    ahora = timezone.now()
+
+    reservas_activas = (
+        Reserva.objects
+        .select_related('sala')
+        .filter(termino__gt=ahora)
+        .order_by('-inicio')
+    )
+
+    reservas_finalizadas = (
+        Reserva.objects
+        .select_related('sala')
+        .filter(termino__lte=ahora)
+        .order_by('-inicio')
+    )
+
+    contexto = {
+        'reservas_activas': reservas_activas,
+        'reservas_finalizadas': reservas_finalizadas,
+    }
+    return render(request, 'salas_app/lista_reservas.html', contexto)
+
 
 
 # Se creó la vista para editar una reserva existente.
