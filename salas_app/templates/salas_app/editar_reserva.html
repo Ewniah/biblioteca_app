@@ -1,0 +1,51 @@
+{% extends 'salas_app/base.html' %}
+
+{% block contenido %}
+  <h1 class="mb-3">Editar reserva ⏱️</h1>
+  <p class="text-muted">
+    Aquí puedes acortar la hora de término para liberar la sala antes de tiempo.
+  </p>
+
+  <div class="row">
+    <div class="col-md-6">
+      <form method="post" class="card card-body shadow-sm">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div class="mb-3">
+          <label class="form-label">{{ form.sala.label }}</label>
+          {{ form.sala }}
+          {{ form.sala.errors }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">{{ form.nombre_estudiante.label }}</label>
+          {{ form.nombre_estudiante }}
+          {{ form.nombre_estudiante.errors }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">{{ form.rut_estudiante.label }}</label>
+          {{ form.rut_estudiante }}
+          {{ form.rut_estudiante.errors }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">{{ form.inicio.label }}</label>
+          {{ form.inicio }}
+          {{ form.inicio.errors }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">{{ form.termino.label }}</label>
+          {{ form.termino }}
+          {{ form.termino.errors }}
+        </div>
+
+        <button type="submit" class="btn btn-success">
+          Guardar cambios 💾
+        </button>
+      </form>
+    </div>
+  </div>
+{% endblock %}

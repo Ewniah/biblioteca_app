@@ -1,0 +1,46 @@
+{% extends 'salas_app/base.html' %}
+
+{% block contenido %}
+  <h1 class="mb-3">Reservas registradas 📋</h1>
+
+  <table class="table table-hover align-middle">
+    <thead>
+      <tr>
+        <th>Sala</th>
+        <th>Estudiante</th>
+        <th>RUT</th>
+        <th>Inicio</th>
+        <th>Término</th>
+        <th>Activa</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for reserva in reservas %}
+        <tr>
+          <td>{{ reserva.sala.nombre }}</td>
+          <td>{{ reserva.nombre_estudiante }}</td>
+          <td>{{ reserva.rut_estudiante }}</td>
+          <td>{{ reserva.inicio }}</td>
+          <td>{{ reserva.termino }}</td>
+          <td>
+            {% if reserva.esta_activa %}
+              🟢
+            {% else %}
+              ⚪
+            {% endif %}
+          </td>
+          <td>
+            <a href="{% url 'editar_reserva' reserva.pk %}" class="btn btn-sm btn-outline-primary">
+              Editar ⏱️
+            </a>
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="7">No hay reservas registradas.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

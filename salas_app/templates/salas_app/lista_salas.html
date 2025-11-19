@@ -1,0 +1,37 @@
+{% extends 'salas_app/base.html' %}
+
+{% block contenido %}
+  <h1 class="mb-3">Salas de estudio disponibles 🧑‍🎓</h1>
+  <p class="text-muted">Hora actual del sistema: {{ ahora }}</p>
+
+  <table class="table table-striped align-middle">
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Capacidad</th>
+        <th>Descripción</th>
+        <th>Estado</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for sala in salas %}
+        <tr>
+          <td>{{ sala.nombre }}</td>
+          <td>{{ sala.capacidad }}</td>
+          <td>{{ sala.descripcion|default:"—" }}</td>
+          <td>
+            {% if sala.esta_disponible %}
+              <span class="badge badge-disponible">Disponible 🟢</span>
+            {% else %}
+              <span class="badge badge-ocupada">Ocupada 🔴</span>
+            {% endif %}
+          </td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="4">No hay salas registradas aún.</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% endblock %}

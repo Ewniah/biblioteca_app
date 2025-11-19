@@ -1,0 +1,49 @@
+{% extends 'salas_app/base.html' %}
+
+{% block contenido %}
+  <h1 class="mb-3">Nueva reserva ✏️</h1>
+
+  <div class="row">
+    <div class="col-md-6">
+      <form method="post" class="card card-body shadow-sm">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+
+        <div class="mb-3">
+          <label class="form-label">{{ form.sala.label }}</label>
+          {{ form.sala }}
+          {{ form.sala.errors }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">{{ form.nombre_estudiante.label }}</label>
+          {{ form.nombre_estudiante }}
+          {{ form.nombre_estudiante.errors }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">{{ form.rut_estudiante.label }}</label>
+          {{ form.rut_estudiante }}
+          <div class="form-text">Formato: 12345678-9</div>
+          {{ form.rut_estudiante.errors }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">{{ form.inicio.label }}</label>
+          {{ form.inicio }}
+          {{ form.inicio.errors }}
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label">{{ form.termino.label }}</label>
+          {{ form.termino }}
+          {{ form.termino.errors }}
+        </div>
+
+        <button type="submit" class="btn btn-primary">
+          Guardar reserva ✅
+        </button>
+      </form>
+    </div>
+  </div>
+{% endblock %}
