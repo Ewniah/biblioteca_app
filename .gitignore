@@ -1,0 +1,18 @@
+# Django / Python
+*.log
+*.pyc
+__pycache__/
+db.sqlite3
+
+# Entornos virtuales
+venv/
+.env
+.env.*
+
+# Archivos de VSCode / IDE
+.vscode/
+.idea/
+
+# Archivos temporales
+*.tmp
+*.bak
