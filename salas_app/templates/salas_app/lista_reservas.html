@@ -34,6 +34,11 @@
             <a href="{% url 'editar_reserva' reserva.pk %}" class="btn btn-sm btn-outline-primary">
               Editar ⏱️
             </a>
+            {% if reserva.esta_activa %}
+            <a href="{% url 'terminar_reserva' reserva.pk %}" class="btn btn-sm btn-outline danger">
+                Terminar Ahora 🛑
+            </a>
+            {% endif %}
           </td>
         </tr>
       {% empty %}

@@ -1,3 +1,5 @@
+from datetime import timedelta
+
 from django.shortcuts import render, get_object_or_404, redirect
 from django.utils import timezone
 
@@ -22,16 +24,22 @@ def lista_salas(request):
 def crear_reserva(request):
     """
     Crea una reserva de sala por parte de un estudiante utilizando el formulario ReservaForm.
+    La duración predeterminada de la reserva es de 2 horas.
     """
     if request.method == 'POST':
         form = ReservaForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('lista_salas')
+            reserva = form.save(commit=False)
+            # El inicio se establece al momento de la creación
+            inicio =  timezone.now()
+            reserva.inicio = inicio
+            reserva.termino = inicio + timedelta(hours=2)  # Duración fija de 2 horas
+            reserva.save() 
+            return redirect('lista_salas') # Redirige a la lista de salas después de guardar
     else:
-        form = ReservaForm()
+        form = ReservaForm() # Formulario vacío para GET request
 
-    return render(request, 'salas_app/crear_reserva.html', {'form': form}) # Renderiza el formulario de reserva
+    return render(request, 'salas_app/crear_reserva.html', {'form': form})
 
 
 # Se creó la vista para listar todas las reservas.
@@ -62,3 +70,16 @@ def editar_reserva(request, pk):
         'form': form,
         'reserva': reserva,
     }) # Renderiza el formulario de edición de reserva
+
+def terminar_reserva(request, pk):
+    """
+    Marca una reserva como terminada estableciendo su tiempo de término al momento actual.
+    """
+    reserva = get_object_or_404(Reserva, pk=pk)
+
+    # Solo tiene sentido cambiarla si sigue activa
+    if reserva.esta_activa():
+        reserva.termino = timezone.now()
+        reserva.save()
+
+    return redirect('lista_reservas')
