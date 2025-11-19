@@ -32,7 +32,7 @@ CREATE DATABASE biblioteca_app_bd;
 1. Clonar el repositorio:
 
 ```bash
-git clone https://github.com/TU_USUARIO/biblioteca_app.git
+git clone https://github.com/Ewniah/biblioteca_app.git
 cd biblioteca_app
 ```
 
