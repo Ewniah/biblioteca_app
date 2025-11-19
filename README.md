@@ -1,4 +1,4 @@
-# Sistema de reservas - Biblioteca ITID 📚
+# Sistema de reservas - Biblioteca Digital 📚
 
 Aplicación web desarrollada con Django y PostgreSQL para gestionar las reservas de salas de estudio de la biblioteca ITID.  
 Permite a los estudiantes reservar salas por bloques de 2 horas, controlando la disponibilidad en tiempo real y registrando un historial de reservas.
